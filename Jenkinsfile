@@ -1,5 +1,5 @@
 #!groovy
-@Library("Jenkins_Library@2.0.0") _
+//@Library("Jenkins_Library@2.0.0") _
 pipeline {
    
 			customWorkspace "C://Jenkins//${env.JOB_NAME}".replace('%2F', '_')
