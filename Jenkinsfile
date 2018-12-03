@@ -4,7 +4,7 @@ pipeline {
    agent{
 	   node {
 	   label 'master'
-	   	customWorkspace "F://Jenkins//${env.JOB_NAME}".replace('%2F', '_')
+	   	customWorkspace "C://Jenkins//${env.JOB_NAME}".replace('%2F', '_')
 	   
    }
    
