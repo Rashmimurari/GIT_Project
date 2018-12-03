@@ -1,26 +1,26 @@
 #!groovy
-//@Library("Jenkins_Library@2.0.0") _
+//@Library("Jenkins_Library@2.147") _
 pipeline {
-	agent{
-		node{
-			label 'master'   
-			customWorkspace "C://Jenkins//${env.JOB_NAME}".replace('%2F', '_')
-		}
-
-	}	
+   agent{
+	   node {
+	   label 'master'
+	   	customWorkspace "F://Jenkins//${env.JOB_NAME}".replace('%2F', '_')
+	   
+   }
+   
+   }
+			
 		
-	
-
-	parameters{
+parameters{
 		
 	    string(	defaultValue: "12.1.0", 
-				description: 'Package Version.', 
+				description: 'Package version', 
 				name: 'COMPONENTVERSION' )
 		/*string( defaultValue: '25689',
-				description: 'The SAMI GIT PROJECT ID',
-				name: 'GIT_PROJECT_ID' )  */              
+				description: 'The GIT PROJECT ID',
+				name: 'GIT_PROJECT_ID' )   */             
 
-		string( defaultValue: "Rashmimurari2015@gmail.com",
+		string( defaultValue: "haristreddy@gmail.com",
 				description: 'E-mail Addresses for users who need failed or succesful build e-mails',
 				name: 'EMAIL_LIST')
 
@@ -34,9 +34,9 @@ pipeline {
 		ComponentVersion = "${params.COMPONENTVERSION}.${env.BUILD_NUMBER}"	
 	}
 
-    triggers {
-        gitlab(triggerOnPush: true, triggerOnMergeRequest: true, branchFilterType: 'All')
-    }
+  /*  triggers {
+        githubPush
+    } */
 
     stages {
 		stage('Checkout') {
@@ -66,9 +66,7 @@ pipeline {
 			}
 		}*/
 
-	}
-
-	
+	} 
 	post {
        /*always {
         /// clean up the file
@@ -80,12 +78,12 @@ pipeline {
 			updateGitlabCommitStatus name: 'build', state: 'failed'
 			// Only send e-mail errors when it is the master branch
 			script {
+				
 					emailext (
 						to: "${params.EMAIL_LIST}", 
 						subject: "Build ${env.BUILD_NUMBER} - FAILED (${env.JOB_NAME})" 
 					)
 					
-				}
 			}  			          
 		}
 		success {
